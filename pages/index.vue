@@ -2,7 +2,7 @@
 import { usePrismic } from '@prismicio/vue';
 const prismic = usePrismic();
 
-const { data } = await useAsyncData('prismic', () => prismic.client.getSingle('home'));
+const { data } = await useAsyncData('prismic', () => prismic.client.getSingle('home'), { server: false});
 </script>
 
 <template>
