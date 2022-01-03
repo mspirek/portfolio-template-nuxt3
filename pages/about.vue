@@ -7,14 +7,12 @@ const { data } = await useAsyncData('prismic', () => prismic.client.getSingle('h
 
 <template>
   <div v-if="data">
-    <div class="font-bold">
     <AppHero
-      header="Welcome."
-      subheader="This is my website"
+      header="About."
+      subheader="Some more about me"
       cta="See My Work"
       link="/work"
     />
-      <PrismicRichText :field="data.data.title" />
-    </div>
+    <PrismicRichText :field="data.data.title" />
   </div>
 </template>
