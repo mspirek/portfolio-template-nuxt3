@@ -8,6 +8,8 @@ import TextSlice from '@/components/slices/TextSlice';
 import ImageSlice from '@/components/slices/ImageSlice';
 import EmbedSlice from '@/components/slices/EmbedSlice';
 import CtaSlice from '@/components/slices/CtaSlice';
+import GallerySlice from '@/components/slices/GallerySlice';
+
 
 const components = {
   hero_slice: HeroSlice,
@@ -15,6 +17,7 @@ const components = {
   image_slice: ImageSlice,
   embed_slice: EmbedSlice,
   cta_slice: CtaSlice,
+  gallery_slice: GallerySlice,
 };
 
 const { data: page } = await useAsyncData('prismic', () => prismic.client.getByUID('portfolio_item', route.params.uid), { server: false});
