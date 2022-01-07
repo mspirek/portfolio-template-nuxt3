@@ -1,4 +1,4 @@
-# Nuxt 3 Minimal Starter
+# Portfolio Template / Nuxt3 / Tailwind3
 
 We recommend to look at the [documentation](https://v3.nuxtjs.org).
 
@@ -12,7 +12,7 @@ yarn install
 
 ## Development
 
-Start the development server on http://localhost:3000
+Start the development server on <http://localhost:3000>
 
 ```bash
 yarn dev
