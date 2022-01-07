@@ -1,41 +1,46 @@
 <script>
 export default {
-
+  name: 'ProfileCard',
+  props: {
+    card: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>
 
 <template>
   <router-link
-    to="/portfolio-item"
-    class="bg-gray-700 rounded-md overflow-hidden block transform hover:-translate-y-2 transition-transform ease-in-out"
+    :to="`/work/${card.uid}`"
+    class="dark:bg-stone-800 bg-stone-200 rounded-md overflow-hidden block transform hover:-translate-y-2 transition-transform ease-in-out"
   >
     <div>
-      <img
-        src="~/assets/img/example.png"
-      >
+      <PrismicImage :field="card.data.cover_image" />
     </div>
   
-    <div class="p-8 text-white">
-      <h3 class="text-2xl pb-2 font-header">
-        Fitness Buddy
+    <div class="p-8">
+      <h3 class="text-2xl pb-2 font-header font-bold">
+        {{ $prismic.asText(card.data.title) }}
       </h3>
-      <h4 class="pb-2">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-      </h4>
+      <PrismicRichText
+        :field="card.data.excerpt"
+        class="pb-2 light-text"
+      />
       <ul class="flex">
-        <li>Mobile</li>
-        <li class="mx-2">
-          /
-        </li>
-        <li>UI</li>
-        <li class="mx-2">
-          /
-        </li>
-        <li>UX</li> 
-        <li class="mx-2">
-          /
-        </li>
-        <li>Wireframing</li>
+        <template
+          v-for="(item, idx) in card.data.categories"
+          :key="idx"
+        >
+          <li>{{ $prismic.asText(item.category) }}</li>
+          <li
+            v-if="idx+1 !== card.data.categories.length"
+            class="mx-2 text-stone-600"
+            aria-hidden="true"
+          >
+            /
+          </li>
+        </template>
       </ul>
     </div>
   </router-link>

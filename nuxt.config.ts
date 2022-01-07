@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/eslint-module',
   ],
+
   build: {
     postcss: {
       postcssOptions: {
@@ -23,5 +24,9 @@ export default defineNuxtConfig({
   css: [
     '@/assets/css/main.css',
   ],
+
+  publicRuntimeConfig: {
+    PRISMIC_REPO: process.env.PRISMIC_REPO,
+  },
 
 })

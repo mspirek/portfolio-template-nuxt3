@@ -1,27 +1,62 @@
 <script>
+import { ExternalLinkIcon, MenuAlt3Icon, XIcon, SunIcon, MoonIcon } from '@heroicons/vue/outline';
 export default {
+  components: {
+    ExternalLinkIcon,
+    MenuAlt3Icon,
+    XIcon,
+    SunIcon,
+    MoonIcon,
+  },
+  props: {
+    settings: {
+      type: Object,
+      required: true,
+    },
+    darkMode: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  emits: ['darkMode'],
   data: () => ({
     menuOpen: false,
   }),
+  watch: {
+    $route() {
+      this.menuOpen = false;
+    },
+  },
   methods: {
     toggleMenu() {
       this.menuOpen = !this.menuOpen;
+    },
+    toggleDarkMode() {
+      this.$emit('darkMode');
     },
   },
 };
 </script>
 
 <template>
-  <div class="flex justify-between items-center container max-w-7xl px-6 mx-auto py-8">
+  <header
+    v-if="settings"
+    class="flex justify-between items-center container max-w-7xl px-6 mx-auto pt-8 pb-16"
+  >
     <div>
       <router-link to="/">
-        <img
-          src="~/assets/img/gabe.svg"
-        >
+        <PrismicImage
+          :field="settings.data.logo_dark"
+          class="dark:hidden block"
+        />
+        <PrismicImage
+          :field="settings.data.logo_light"
+          class="hidden dark:block"
+        />
       </router-link>
     </div>
-    <nav class="hidden md:block">
-      <ul class="flex font-semibold">
+    <nav class="hidden md:block desktop-nav">
+      <ul class="flex font-semibold items-center">
         <li class="mx-4">
           <router-link to="/work">
             Work
@@ -32,106 +67,128 @@ export default {
             About
           </router-link>
         </li>
-        <li class="mx-4 flex items-center">
+        <li
+          v-if="settings.data.cv"
+          class="mx-4"
+        >
           <a
-            href="mailto:test@test.com"
-            class=""
+            :href="$prismic.asLink(settings.data.cv)"
+            rel="noreferrer noopener"
+            target="_blank"
+          >
+            CV
+          </a>
+        </li>
+        <li class="mx-4">
+          <a
+            class="relative"
+            :href="`mailto:${$prismic.asText(settings.data.email)}`"
           >
             Contact
+            <ExternalLinkIcon class="h-5 w-5 absolute top-0 right-0 -mr-6" />
           </a>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5 ml-2"
-            viewBox="0 0 20 20"
-            fill="currentColor"
+        </li>
+        <li>
+          <button
+            class="pl-6 hover:text-blue-600 transition-all"
+            aria-label="toggle color scheme"
+            @click="toggleDarkMode"
           >
-            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-          </svg>
+            <MoonIcon
+              v-if="darkMode"
+              class="h-6 w-6"
+            />
+            <SunIcon
+              v-else
+              class="h-6 w-6"
+            />
+          </button>
         </li>
       </ul>
     </nav>
-    <button
-      class="md:hidden"
-      @click="toggleMenu"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-8 w-8"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
+    <div class="md:hidden">
+      <button
+        class="pr-4 hover:text-blue-600 transition-all"
+        aria-label="toggle color scheme"
+        @click="toggleDarkMode"
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M4 6h16M4 12h16m-7 6h7"
+        <MoonIcon
+          v-if="darkMode"
+          class="h-8 w-8"
         />
-      </svg>
-    </button>
+        <SunIcon
+          v-else
+          class="h-8 w-8"
+        />
+      </button>
+      <button
+        @click="toggleMenu"
+      >
+        <MenuAlt3Icon class="h-8 w-8" />
+      </button>
+    </div>
     <div
       v-show="menuOpen"
-      :class="{'opacity-100': menuOpen}"
-      class="md:hidden fixed bg-blue-800 w-full h-full top-0 left-0 z-10 opacity-0"
+      class="md:hidden fixed bg-blue-800 bg-opacity-90 w-full h-full top-0 left-0 z-10"
     >
       <div class="flex justify-between items-center px-6 py-8">
         <router-link to="/">
-          <img
-            src="~/assets/img/gabe.svg"
-          >
+          <PrismicImage :field="settings.data.logo_light" />
         </router-link>
         <button @click="toggleMenu">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clip-rule="evenodd"
-            />
-          </svg>
+          <XIcon class="h-8 w-8" />
         </button>
       </div>
-      <nav class="">
-        <ul class="flex flex-col font-semibold text-center text-lg">
+      <nav class="mobile-nav">
+        <ul class="flex flex-col font-semibold text-center text-xl">
           <li class="my-4">
-            <router-link to="/">
+            <router-link
+              to="/"
+              class=""
+            >
               Home
             </router-link>
           </li>
           <li class="my-4">
-            <router-link to="/work">
+            <router-link
+              to="/work"
+              class=""
+            >
               Work
             </router-link>
           </li>
           <li class="my-4">
-            <router-link to="/about">
+            <router-link
+              to="/about"
+              class=""
+            >
               About
             </router-link>
           </li>
-          <li class="my-4 flex items-center justify-center">
+          <li
+            v-if="settings.data.cv"
+            class="my-4"
+          >
             <a
-              href="mailto:test@test.com"
+              :href="$prismic.asLink(settings.data.cv)"
+              rel="noreferrer noopener"
+              target="_blank"
               class=""
             >
-              Contact
+              CV
             </a>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 ml-2"
-              viewBox="0 0 20 20"
-              fill="currentColor"
+          </li>
+          <li class="my-4">
+            <a
+              :href="`mailto:${$prismic.asText(settings.email)}`"
+              class="relative"
             >
-              <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
-              <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
-            </svg>
+              Contact
+              <ExternalLinkIcon class="h-5 w-5 absolute top-0 right-0 -mr-6" />
+            </a>
           </li>
         </ul>
       </nav>
     </div>
-  </div>
+  </header>
 </template>
