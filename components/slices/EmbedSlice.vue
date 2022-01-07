@@ -11,18 +11,17 @@ export default {
 </script>
 
 <template>
-  <div
-    class="grid gap-4 pb-16"
-  >
+  <div class="pb-16">
     <div
-      v-for="(img, idx) in slice.items"
-      :key="idx"
-      class="rounded-md overflow-hidden"
-    >
-      <PrismicImage
-        :field="img.image"
-        class="text-6xl font-bold font-header"
-      />
-    </div>
+      class="w-full"
+      v-html="slice.primary.embed.html"
+    />
   </div>
 </template>
+
+<style>
+iframe {
+  width: 100% !important;
+  height: 100% !important;
+}
+</style>

@@ -1,11 +1,6 @@
 <script>
-import { ArrowSmRightIcon } from '@heroicons/vue/outline';
-
 export default {
   name: 'HeroSlice',
-  components: {
-    ArrowSmRightIcon,
-  },
   props: {
     slice: {
       type: Object,
@@ -29,13 +24,9 @@ export default {
       :field="slice.primary.body_text"
       class="pb-2 light-text"
     />
-    <PrismicLink
-      v-if="slice.primary.cta_link && slice.primary.cta_text"
-      :field="slice.primary.cta_link"
-      class="border-0 bg-blue-700 py-3 px-8 rounded-full inline-flex text-stone-100 hover:bg-blue-900 dark:hover:text-stone-100 transition-colors font-bold"
-    >
-      {{ $prismic.asText(slice.primary.cta_text ) }}
-      <ArrowSmRightIcon class="h-6 w-6" />
-    </PrismicLink>
+    <BaseButton
+      :link="slice.primary.cta_link"
+      :text="slice.primary.cta_text"
+    />
   </div>
 </template>

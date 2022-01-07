@@ -22,8 +22,15 @@ const { data: page } = await useAsyncData('prismic', () => prismic.client.getByU
 </script>
 
 <script>
+import { format } from 'date-fns';
+
 export default {
-  name: 'PortfolioItem'
+  name: 'PortfolioItem',
+  computed: {
+    formattedDate() {
+      return format(this.$prismic.asDate(this.page.data.date), 'MMM yyyy' );
+    },
+  },
 }
 </script>
 
@@ -37,24 +44,25 @@ export default {
 
   <PageLoader v-if="!page" />
   <div v-else>
-    <div>
-      <ul class="flex pb-4">
-        <template
-          v-for="(item, idx) in page.data.categories"
-          :key="idx"
-        >
-          <li>{{ $prismic.asText(item.category) }}</li>
-          <li
-            v-if="idx+1 !== page.data.categories.length"
-            class="mx-2 text-stone-600"
-            aria-hidden="true"
-          >
-            /
-          </li>
-        </template>
-      </ul>
-      <SliceZone :slices="page.data.body" :components="components" />
+    <div class="pb-4">
+      {{ formattedDate }}
     </div>
+    <ul class="flex pb-4">
+      <template
+        v-for="(item, idx) in page.data.categories"
+        :key="idx"
+      >
+        <li>{{ $prismic.asText(item.category) }}</li>
+        <li
+          v-if="idx+1 !== page.data.categories.length"
+          class="mx-2 text-stone-600"
+          aria-hidden="true"
+        >
+          /
+        </li>
+      </template>
+    </ul>
+    <SliceZone :slices="page.data.body" :components="components" />
   </div>
 </div>
 </template>

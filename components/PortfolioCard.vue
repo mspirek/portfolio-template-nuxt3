@@ -1,10 +1,17 @@
 <script>
+import { format } from 'date-fns';
+
 export default {
   name: 'ProfileCard',
   props: {
     card: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    formattedDate() {
+      return format(this.$prismic.asDate(this.card.data.date), 'MMM yyyy' );
     },
   },
 };
@@ -15,8 +22,11 @@ export default {
     :to="`/work/${card.uid}`"
     class="dark:bg-stone-800 bg-stone-200 rounded-md overflow-hidden block transform hover:-translate-y-2 transition-transform ease-in-out"
   >
-    <div>
-      <PrismicImage :field="card.data.cover_image" />
+    <div class="h-96">
+      <PrismicImage
+        :field="card.data.cover_image"
+        class="object-cover h-full w-full"
+      />
     </div>
   
     <div class="p-8">
@@ -27,7 +37,10 @@ export default {
         :field="card.data.excerpt"
         class="pb-2 light-text"
       />
-      <ul class="flex">
+      <div>
+        {{ formattedDate }}
+      </div>
+      <ul class="flex pb-4">
         <template
           v-for="(item, idx) in card.data.categories"
           :key="idx"

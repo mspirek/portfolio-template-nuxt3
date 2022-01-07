@@ -23,6 +23,7 @@
     "@pinia/nuxt": "^0.1.8",
     "@prismicio/client": "^6.0.0.beta.5",
     "@prismicio/vue": "^3.0.0-beta.1",
+    "date-fns": "^2.28.0",
     "pinia": "^2.0.9",
     "prismic-dom": "^2.2.6"
   }
