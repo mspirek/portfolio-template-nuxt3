@@ -55,12 +55,12 @@ export default {
       <router-link to="/">
         <PrismicImage
           :field="settings.data.logo_dark"
-          class="dark:hidden block"
+          class="dark:hidden block h-24 w-24"
           :class="roundedClasses"
         />
         <PrismicImage
           :field="settings.data.logo_light"
-          class="hidden dark:block"
+          class="hidden dark:block h-24 w-24"
           :class="roundedClasses"
         />
       </router-link>
@@ -149,6 +149,7 @@ export default {
           <PrismicImage
             :field="settings.data.logo_light"
             :class="roundedClasses"
+            class="h-24 w-24"
           />
         </router-link>
         <button @click="toggleMenu">
