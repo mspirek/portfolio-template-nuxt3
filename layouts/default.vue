@@ -6,8 +6,6 @@ const { data: settings } = await useAsyncData('prismic', () => prismic.client.ge
 </script>
 
 <script>
-import { defineComponent } from '@vue/composition-api'
-
 export default {
   data: () =>({
     darkMode: true,
@@ -25,10 +23,8 @@ export default {
   },
   mounted() {
     if (process.client) {
-      console.log('cleint')
       if (localStorage.getItem('theme') && localStorage.getItem('theme') === 'light') {
         this.darkMode = false;
-        console.log('light')
       }
       if (window.matchMedia('(prefers-color-scheme: light)').matches) {
         this.darkMode = false;
@@ -37,7 +33,6 @@ export default {
   }
 }
 </script>
-
 
 <template>
   <div :class="{'dark': darkMode}">

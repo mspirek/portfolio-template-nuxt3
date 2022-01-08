@@ -1,8 +1,13 @@
 <script>
 import { format } from 'date-fns';
+import { CalendarIcon, TagIcon } from '@heroicons/vue/outline';
 
 export default {
-  name: 'ProfileCard',
+  name: 'PortfolioCard',
+  components: {
+    CalendarIcon,
+    TagIcon,
+  },
   props: {
     card: {
       type: Object,
@@ -25,7 +30,7 @@ export default {
     <div class="h-96">
       <PrismicImage
         :field="card.data.cover_image"
-        class="object-cover h-full w-full"
+        class="object-cover h-full w-full object-top"
       />
     </div>
   
@@ -37,10 +42,12 @@ export default {
         :field="card.data.excerpt"
         class="pb-2 light-text"
       />
-      <div>
+      <div class="pb-4 flex items-center">
+        <CalendarIcon class="h-5 w-5 mr-2" />
         {{ formattedDate }}
       </div>
-      <ul class="flex pb-4">
+      <ul class="flex items-center pb-4">
+        <TagIcon class="h-5 w-5 mr-2" />
         <template
           v-for="(item, idx) in card.data.categories"
           :key="idx"

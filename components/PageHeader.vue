@@ -22,6 +22,14 @@ export default {
   data: () => ({
     menuOpen: false,
   }),
+  computed: {
+    roundedClasses() {
+      if (this.settings.data.round_logo) {
+        return 'rounded-full border-4 border-stone-400';
+      }
+      return '';
+    },
+  },
   watch: {
     $route() {
       this.menuOpen = false;
@@ -48,10 +56,12 @@ export default {
         <PrismicImage
           :field="settings.data.logo_dark"
           class="dark:hidden block"
+          :class="roundedClasses"
         />
         <PrismicImage
           :field="settings.data.logo_light"
           class="hidden dark:block"
+          :class="roundedClasses"
         />
       </router-link>
     </div>
@@ -133,7 +143,10 @@ export default {
     >
       <div class="flex justify-between items-center px-6 py-8">
         <router-link to="/">
-          <PrismicImage :field="settings.data.logo_light" />
+          <PrismicImage
+            :field="settings.data.logo_light"
+            :class="roundedClasses"
+          />
         </router-link>
         <button @click="toggleMenu">
           <XIcon class="h-8 w-8" />

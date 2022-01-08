@@ -27,7 +27,7 @@ export default {
     >
       <PrismicImage
         :field="img.image"
-        class="text-6xl font-bold font-header"
+        class=""
       />
     </div>
   </div>

@@ -20,7 +20,12 @@ const components = {
 
 const [{ data: page }, { data: items }] = await Promise.all([
       useAsyncData('prismic', () => prismic.client.getByUID('page', 'work'), { server: false}),
-      useAsyncData('prismic2', () => prismic.client.query(prismic.predicate.at('document.type', 'portfolio_item')), { server: false}),
+      useAsyncData('prismic2', () => prismic.client.query(
+        prismic.predicate.at('document.type', 'portfolio_item'), {
+          orderings: 'my.portfolio_item.date desc',
+          pageSize: 100,
+          }
+      ), { server: false}),
     ]);
 
 </script>

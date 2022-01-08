@@ -20,45 +20,46 @@ export default {
     v-if="settings"
     class="flex flex-col md:flex-row justify-between container max-w-7xl px-6 mx-auto border-t py-8"
   >
-    <nav class="pb-4 md:pb-0">
+    <nav class="">
       <ul
-        class="flex pb-2"
+        class="flex flex-wrap"
       >
-        <li>
+        <li class="py-2">
           <router-link to="/">
             Home
           </router-link>
         </li>
         <li
-          class="mx-2 text-stone-600"
+          class="mx-2 py-2 text-stone-600"
           aria-hidden="true"
         >
           /
         </li>
-        <li>
+        <li class="py-2">
           <router-link to="/work">
             Work
           </router-link>
         </li>
         <li
-          class="mx-2 text-stone-600"
+          class="mx-2 py-2 text-stone-600"
           aria-hidden="true"
         >
           /
         </li>
-        <li>
+        <li class="py-2">
           <router-link to="/about">
             About
           </router-link>
         </li>
         <li
-          class="mx-2 text-stone-600"
+          class="mx-2 py-2 text-stone-600"
           aria-hidden="true"
         >
           /
         </li>
         <li
           v-if="settings.data.cv"
+          class="py-2"
         >
           <a
             :href="$prismic.asLink(settings.data.cv)"
@@ -69,12 +70,13 @@ export default {
           </a>
         </li>
         <li
-          class="mx-2 text-stone-600"
+          v-if="settings.data.cv"
+          class="mx-2 py-2 text-stone-600"
           aria-hidden="true"
         >
           /
         </li>
-        <li>
+        <li class="py-2">
           <a :href="`mailto:${$prismic.asText(settings.data.email)}`">
             Contact
           </a>
@@ -82,16 +84,16 @@ export default {
       </ul>
       <ul
         v-if="settings.data.external_links.length"
-        class="flex"
+        class="flex flex-wrap"
       >
-        <li class="mr-2 self-end">
+        <li class="mr-2 py-2 self-end">
           <ExternalLinkIcon class="h-5 w-5" />
         </li>
         <template
           v-for="(link, idx) in settings.data.external_links"
           :key="idx"
         >
-          <li>
+          <li class="py-2">
             <PrismicLink
               :field="link.url"
             >
@@ -100,7 +102,7 @@ export default {
           </li>
           <li
             v-if="idx+1 !== settings.data.external_links.length"
-            class="mx-2 text-stone-600"
+            class="mx-2 py-2 text-stone-600"
             aria-hidden="true"
           >
             /
@@ -110,10 +112,12 @@ export default {
     </nav>
 
     <div>
-      <div class="flex md:justify-end items-center pb-2">
+      <div class="flex md:justify-end items-center py-2">
         <LocationMarkerIcon class="h-5 w-5 mr-1" /> {{ $prismic.asText(settings.data.location) }}
       </div>
-      <div>© {{ new Date().getFullYear() }} {{ $prismic.asText(settings.data.name) }}</div>
+      <div class="py-2">
+        © {{ new Date().getFullYear() }} {{ $prismic.asText(settings.data.name) }}
+      </div>
     </div>
   </footer>
 </template>

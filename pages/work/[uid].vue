@@ -26,9 +26,14 @@ const { data: page } = await useAsyncData('prismic', () => prismic.client.getByU
 
 <script>
 import { format } from 'date-fns';
+import { CalendarIcon, TagIcon } from '@heroicons/vue/outline';
 
 export default {
   name: 'PortfolioItem',
+  components: {
+    CalendarIcon,
+    TagIcon,
+  },
   computed: {
     formattedDate() {
       return format(this.$prismic.asDate(this.page.data.date), 'MMM yyyy' );
@@ -47,24 +52,28 @@ export default {
 
   <PageLoader v-if="!page" />
   <div v-else>
-    <div class="pb-4">
+    <div class="pb-4 flex items-center">
+      <CalendarIcon class="h-5 w-5 mr-2" />
       {{ formattedDate }}
     </div>
-    <ul class="flex pb-4">
-      <template
-        v-for="(item, idx) in page.data.categories"
-        :key="idx"
-      >
-        <li>{{ $prismic.asText(item.category) }}</li>
-        <li
-          v-if="idx+1 !== page.data.categories.length"
-          class="mx-2 text-stone-600"
-          aria-hidden="true"
+    <div class="flex items-center pb-4">
+      <TagIcon class="h-5 w-5 mr-2" />
+      <ul class="flex">
+        <template
+          v-for="(item, idx) in page.data.categories"
+          :key="idx"
         >
-          /
-        </li>
-      </template>
-    </ul>
+          <li>{{ $prismic.asText(item.category) }}</li>
+          <li
+            v-if="idx+1 !== page.data.categories.length"
+            class="mx-2 text-stone-600"
+            aria-hidden="true"
+          >
+            /
+          </li>
+        </template>
+      </ul>
+    </div>
     <SliceZone :slices="page.data.body" :components="components" />
   </div>
 </div>

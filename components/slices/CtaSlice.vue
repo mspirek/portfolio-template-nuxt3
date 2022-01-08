@@ -17,16 +17,16 @@ export default {
   >
     <div class="md:flex">
       <div class="md:w-1/4 pb-4" />
-      <div class="md:w-3/4 light-text">
+      <div class="md:w-3/4">
         <PrismicRichText
           :field="slice.primary.header"
           class="text-3xl font-bold font-header pb-4"
         />
-        <ul class="flex">
+        <ul class="flex flex-wrap">
           <li
             v-for="(item, idx) in slice.items"
             :key="idx"
-            class="mr-4 last:mr-0"
+            class="mr-4 last:mr-0 py-2"
           >
             <BaseButton
               :link="item.cta_link"
