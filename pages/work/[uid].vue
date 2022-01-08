@@ -47,7 +47,7 @@ export default {
   <Head v-if="page">
     <Title>{{ $prismic.asText(page.data.meta_title) }}</Title>
     <Meta name="description" :content="$prismic.asText(page.data.meta_description)" />
-    <Meta name="og:image" :content="page.data.meta_image.url" />
+    <Meta property="og:image" :content="page.data.meta_image.url" />
   </Head>
 
   <PageLoader v-if="!page" />
