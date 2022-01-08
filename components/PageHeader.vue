@@ -78,7 +78,7 @@ export default {
           </router-link>
         </li>
         <li
-          v-if="settings.data.cv"
+          v-if="$prismic.asLink(settings.data.cv)"
           class="mx-4"
         >
           <a
@@ -179,7 +179,7 @@ export default {
             </router-link>
           </li>
           <li
-            v-if="settings.data.cv"
+            v-if="$prismic.asLink(settings.data.cv)"
             class="my-4"
           >
             <a

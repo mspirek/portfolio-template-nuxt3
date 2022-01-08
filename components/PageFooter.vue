@@ -58,7 +58,7 @@ export default {
           /
         </li>
         <li
-          v-if="settings.data.cv"
+          v-if="$prismic.asLink(settings.data.cv)"
           class="py-2"
         >
           <a
@@ -70,7 +70,7 @@ export default {
           </a>
         </li>
         <li
-          v-if="settings.data.cv"
+          v-if="$prismic.asLink(settings.data.cv)"
           class="mx-2 py-2 text-stone-600"
           aria-hidden="true"
         >
