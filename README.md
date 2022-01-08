@@ -1,4 +1,4 @@
-# Portfolio Template / Nuxt3 / Tailwind3
+# Portfolio Template / Nuxt3 / Tailwind3 / Prismic CMS
 
 We recommend to look at the [documentation](https://v3.nuxtjs.org).
 
@@ -8,6 +8,14 @@ Make sure to install the dependencies
 
 ```bash
 yarn install
+```
+
+## ENV
+
+Add an ENV with the name of your prismic repo
+
+```bash
+PRISMIC_REPO=name
 ```
 
 ## Development
