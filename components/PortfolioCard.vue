@@ -16,6 +16,9 @@ export default {
   },
   computed: {
     formattedDate() {
+      if (!this.card.data.date) {
+        return;
+      }
       return format(this.$prismic.asDate(this.card.data.date), 'MMM yyyy' );
     },
   },

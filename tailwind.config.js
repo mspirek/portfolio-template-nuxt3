@@ -8,6 +8,9 @@ module.exports = {
     './nuxt.config.{js,ts}',
   ],
   theme: {
+    fontFamily: {
+      'dm-sans': ['DM Sans', 'sans-serif'],
+    },
     container: {
       center: true,
     },

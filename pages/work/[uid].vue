@@ -36,6 +36,9 @@ export default {
   },
   computed: {
     formattedDate() {
+      if(!this.page.data.date) {
+        return;
+      }
       return format(this.$prismic.asDate(this.page.data.date), 'MMM yyyy' );
     },
   },

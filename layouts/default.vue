@@ -40,7 +40,7 @@ export default {
       <Meta property="og:image" :content="settings.data.default_meta_image.url" />
       <Link rel="shortcut icon" :href="settings.data.favicon.url" />
     </Head>
-    <div class="dark:bg-stone-900 dark:text-stone-100 text-stone-900 bg-stone-100 min-h-screen flex flex-col  font-sans">
+    <div class="dark:bg-stone-900 dark:text-stone-100 text-stone-900 bg-stone-100 min-h-screen flex flex-col font-dm-sans">
       <PageLoader v-if="!settings" />
       <template v-else>
         <PageHeader :settings="settings" @dark-mode="toggleDarkMode" :dark-mode="darkMode"/>
