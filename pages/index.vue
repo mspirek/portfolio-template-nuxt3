@@ -18,29 +18,51 @@ const components = {
   gallery_slice: GallerySlice,
 };
 
-const { data: page } = await useAsyncData('prismic', () => prismic.client.getByUID('page', 'home'), { server: false});
-
+const [{ data: page }, { data: items }] = await Promise.all([
+      useAsyncData('prismic', () => prismic.client.getByUID('page', 'home'), { server: false}),
+      useAsyncData('prismic2', () => prismic.client.query(
+        prismic.predicate.at('document.type', 'portfolio_item'), {
+          orderings: 'my.portfolio_item.date desc',
+          pageSize: 100,
+          }
+      ), { server: false}),
+    ]);
 </script>
 
 <script>
 export default {
-  name: 'Home'
+  name: 'Home',
+  computed: {
+    featuredWork() {
+      if (!this.items) {
+        return;
+      }
+      return this.items.results.filter(item => item.data.featured);
+    }
+  },
 }
 </script>
 
 <template>
-<div>
-  <Head v-if="page">
-    <Title>{{ $prismic.asText(page.data.meta_title) }}</Title>
-    <Meta name="description" :content="$prismic.asText(page.data.meta_description)" />
-    <Meta property="og:image" :content="page.data.meta_image.url" />
-  </Head>
+  <div>
+    <Head v-if="page">
+      <Title>{{ $prismic.asText(page.data.meta_title) }}</Title>
+      <Meta name="description" :content="$prismic.asText(page.data.meta_description)" />
+      <Meta property="og:image" :content="page.data.meta_image.url" />
+    </Head>
 
-  <PageLoader v-if="!page" />
-  <div v-else>
-    <div>
-      <SliceZone :slices="page.data.body" :components="components" />
+    <PageLoader v-if="!page" />
+    <div v-else>
+      <div>
+        <SliceZone :slices="page.data.body" :components="components" />
+      </div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-8" v-if="featuredWork && featuredWork.length">
+      <portfolio-card
+        v-for="(card, idx) in featuredWork"
+        :key="idx"
+        :card="card"
+      />
     </div>
   </div>
-</div>
 </template>
