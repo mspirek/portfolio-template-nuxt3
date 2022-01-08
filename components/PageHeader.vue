@@ -25,7 +25,7 @@ export default {
   computed: {
     roundedClasses() {
       if (this.settings.data.round_logo) {
-        return 'rounded-full border-4 border-stone-400';
+        return 'rounded-full border-4 border-stone-300 dark:border-stone-400';
       }
       return '';
     },

@@ -27,7 +27,7 @@ export default {
         <PrismicImage
           v-for="(img, idx) in slice.items"
           :key="idx"
-          class="bg-stone-100 rounded-full border-4 border-stone-600 w-64 h-64 m-4"
+          class="bg-stone-100 rounded-full border-8 border-stone-300 dark:border-stone-400 w-64 h-64 m-4"
           :field="img.image"
         />
       </div>
