@@ -89,7 +89,10 @@ export default {
             CV
           </a>
         </li>
-        <li class="mx-4">
+        <li
+          v-if="$prismic.asText(settings.data.email)"
+          class="mx-4"
+        >
           <a
             class="relative"
             :href="`mailto:${$prismic.asText(settings.data.email)}`"

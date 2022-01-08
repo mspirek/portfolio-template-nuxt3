@@ -76,7 +76,10 @@ export default {
         >
           /
         </li>
-        <li class="py-2">
+        <li
+          v-if="$prismic.asText(settings.data.email)"
+          class="py-2"
+        >
           <a :href="`mailto:${$prismic.asText(settings.data.email)}`">
             Contact
           </a>
