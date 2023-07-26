@@ -1,25 +1,17 @@
-<script>
-export default {
-  name: 'TextSlice',
-  props: {
-    slice: {
-      type: Object,
-      required: true,
-    },
-  },
-};
+<script setup>
+defineProps(getSliceComponentProps(['slice', 'index', 'slices', 'context']));
 </script>
 
 <template>
   <div class="pb-16">
     <div class="md:flex">
-      <div class="md:w-1/4 pb-4 pr-4">
+      <div class="pb-4 pr-4 md:w-1/4">
         <PrismicRichText
           :field="slice.primary.header"
-          class="text-4xl font-bold font-header"
+          class="font-header text-4xl font-bold"
         />
       </div>
-      <div class="md:w-3/4 light-text">
+      <div class="light-text md:w-3/4">
         <PrismicRichText
           :field="slice.primary.text_body"
           class="prismic-copy"

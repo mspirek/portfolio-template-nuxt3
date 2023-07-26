@@ -1,51 +1,39 @@
-<script>
-import { ArrowSmRightIcon, ExternalLinkIcon } from '@heroicons/vue/outline';
+<script setup>
+import { ArrowRightIcon, ArrowTopRightOnSquareIcon } from '@heroicons/vue/24/outline';
 
-export default {
-  name: 'BaseButton',
-  components: {
-    ArrowSmRightIcon,
-    ExternalLinkIcon,
+const props = defineProps({
+  link: {
+    type: Object,
+    required: true,
   },
-  props: {
-    link: {
-      type: Object,
-      required: true,
-    },
-    text: {
-      type: Object,
-      required: true,
-    },
+  text: {
+    type: Object,
+    required: true,
   },
-  computed: {
-    prismicLink() {
-      return this.$prismic.asLink(this.link);
-    },
-    isExternal() { 
-      return this.prismicLink.startsWith('http');
-    },
-  },
-};
+});
+
+const isExternal = computed(() => {
+  return props.link.link_type !== 'Document';
+});
 </script>
 
 <template>
-  <component
-    :is="isExternal ? 'a' : 'router-link'"
-    v-if="prismicLink"
-    :rel="isExternal ? 'noopener noreferrer': undefined"
-    :to="!isExternal ? prismicLink: undefined"
-    :href="isExternal ? prismicLink : undefined"
-    :target="isExternal ? '_blank': undefined"
-    class="border-0 bg-blue-700 py-3 px-8 rounded-full inline-flex text-stone-100 hover:bg-blue-900 dark:hover:text-stone-100 transition-colors font-bold cursor-pointer"
+  <a
+    v-if="isExternal"
+    rel="noopener noreferrer"
+    :href="usePrismic().asLink(props.link)"
+    target="_blank"
+    class="inline-flex cursor-pointer rounded-full border-0 bg-blue-700 px-8 py-3 font-bold text-stone-100 transition-colors hover:bg-blue-900 dark:hover:text-stone-100"
   >
-    {{ $prismic.asText(text) }}
-    <ArrowSmRightIcon
-      v-if="!isExternal"
-      class="ml-2 h-6 w-6"
-    />
-    <ExternalLinkIcon
-      v-else
-      class="ml-2 h-6 w-6"
-    />
-  </component>
+    {{ usePrismic().asText(props.text) }}
+    <ArrowTopRightOnSquareIcon class="ml-2 h-6 w-6" />
+  </a>
+  <prismic-link
+    v-else
+    :field="props.link"
+    class="inline-flex cursor-pointer rounded-full border-0 bg-blue-700 px-8 py-3 font-bold text-stone-100 transition-colors hover:bg-blue-900 dark:hover:text-stone-100"
+  >
+    {{ usePrismic().asText(props.text) }}
+    <ArrowRightIcon class="ml-2 h-6 w-6" />
+  </prismic-link>
 </template>

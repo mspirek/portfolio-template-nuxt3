@@ -1,72 +1,63 @@
-<script>
-import { ExternalLinkIcon, MenuAlt3Icon, XIcon, SunIcon, MoonIcon } from '@heroicons/vue/outline';
-export default {
-  components: {
-    ExternalLinkIcon,
-    MenuAlt3Icon,
-    XIcon,
-    SunIcon,
-    MoonIcon,
+<script setup>
+import { ArrowTopRightOnSquareIcon, Bars3Icon, MoonIcon, SunIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { useDark, useToggle } from '@vueuse/core';
+const route = useRoute();
+
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
+
+const props = defineProps({
+  settings: {
+    type: Object,
+    required: true,
   },
-  props: {
-    settings: {
-      type: Object,
-      required: true,
-    },
-    darkMode: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  emits: ['darkMode'],
-  data: () => ({
-    menuOpen: false,
-  }),
-  computed: {
-    roundedClasses() {
-      if (this.settings.data.round_logo) {
-        return 'rounded-full border-4 border-stone-300 dark:border-stone-400';
-      }
-      return '';
-    },
-  },
-  watch: {
-    $route() {
-      this.menuOpen = false;
-    },
-  },
-  methods: {
-    toggleMenu() {
-      this.menuOpen = !this.menuOpen;
-    },
-    toggleDarkMode() {
-      this.$emit('darkMode');
-    },
-  },
+});
+
+const menuOpen = ref(false);
+
+//const emit = defineEmits(['darkMode']);
+
+const roundedClasses = computed(() => {
+  if (props.settings.data.round_logo) {
+    return 'rounded-full border-4 border-stone-300 dark:border-stone-400';
+  }
+  return '';
+});
+
+watch(route, () => {
+  menuOpen.value = false;
+});
+
+const toggleMenu = () => {
+  menuOpen.value = !menuOpen.value;
 };
+
+// const toggleDark = () => {
+//   emit('darkMode');
+// };
 </script>
 
 <template>
   <header
     v-if="settings"
-    class="flex justify-between items-center container max-w-7xl px-6 mx-auto pt-8 pb-16"
+    class="container mx-auto flex max-w-7xl items-center justify-between px-6 pb-16 pt-8"
   >
     <div>
       <router-link to="/">
         <PrismicImage
           :field="settings.data.logo_dark"
-          class="dark:hidden block h-24 w-24"
+          class="block h-24 w-24 dark:hidden"
           :class="roundedClasses"
         />
         <PrismicImage
           :field="settings.data.logo_light"
-          class="hidden dark:block h-24 w-24"
+          class="hidden h-24 w-24 dark:block"
           :class="roundedClasses"
         />
       </router-link>
     </div>
-    <nav class="hidden md:block desktop-nav">
-      <ul class="flex font-semibold items-center">
+    <nav class="desktop-nav hidden md:block">
+      <ul class="flex items-center font-semibold">
         <li class="mx-4">
           <router-link to="/work">
             Work
@@ -78,11 +69,11 @@ export default {
           </router-link>
         </li>
         <li
-          v-if="$prismic.asLink(settings.data.cv)"
+          v-if="usePrismic().asLink(settings.data.cv)"
           class="mx-4"
         >
           <a
-            :href="$prismic.asLink(settings.data.cv)"
+            :href="usePrismic().asLink(settings.data.cv)"
             rel="noreferrer noopener"
             target="_blank"
           >
@@ -90,25 +81,25 @@ export default {
           </a>
         </li>
         <li
-          v-if="$prismic.asText(settings.data.email)"
+          v-if="usePrismic().asText(settings.data.email)"
           class="mx-4"
         >
           <a
             class="relative"
-            :href="`mailto:${$prismic.asText(settings.data.email)}`"
+            :href="`mailto:${usePrismic().asText(settings.data.email)}`"
           >
             Contact
-            <ExternalLinkIcon class="h-5 w-5 absolute top-0 right-0 -mr-6" />
+            <ArrowTopRightOnSquareIcon class="absolute right-0 top-0 -mr-6 h-5 w-5" />
           </a>
         </li>
         <li>
           <button
-            class="pl-6 hover:text-blue-600 transition-all"
+            class="pl-6 transition-all hover:text-blue-600"
             aria-label="toggle color scheme"
-            @click="toggleDarkMode"
+            @click="toggleDark()"
           >
             <MoonIcon
-              v-if="darkMode"
+              v-if="!isDark"
               class="h-6 w-6"
             />
             <SunIcon
@@ -121,12 +112,12 @@ export default {
     </nav>
     <div class="md:hidden">
       <button
-        class="pr-4 hover:text-blue-600 transition-all"
+        class="pr-4 transition-all hover:text-blue-600"
         aria-label="toggle color scheme"
-        @click="toggleDarkMode"
+        @click="toggleDark()"
       >
         <MoonIcon
-          v-if="darkMode"
+          v-if="isDark"
           class="h-8 w-8"
         />
         <SunIcon
@@ -134,17 +125,15 @@ export default {
           class="h-8 w-8"
         />
       </button>
-      <button
-        @click="toggleMenu"
-      >
-        <MenuAlt3Icon class="h-8 w-8" />
+      <button @click="toggleMenu">
+        <Bars3Icon class="h-8 w-8" />
       </button>
     </div>
     <div
       v-show="menuOpen"
-      class="md:hidden fixed bg-blue-800 bg-opacity-90 w-full h-full top-0 left-0 z-10"
+      class="fixed left-0 top-0 z-10 h-full w-full bg-blue-800 bg-opacity-90 md:hidden"
     >
-      <div class="flex justify-between items-center px-6 py-8">
+      <div class="flex items-center justify-between px-6 py-8">
         <router-link to="/">
           <PrismicImage
             :field="settings.data.logo_light"
@@ -153,11 +142,11 @@ export default {
           />
         </router-link>
         <button @click="toggleMenu">
-          <XIcon class="h-8 w-8" />
+          <XMarkIcon class="h-8 w-8" />
         </button>
       </div>
       <nav class="mobile-nav">
-        <ul class="flex flex-col font-semibold text-center text-xl">
+        <ul class="flex flex-col text-center text-xl font-semibold">
           <li class="my-4">
             <router-link
               to="/"
@@ -183,11 +172,11 @@ export default {
             </router-link>
           </li>
           <li
-            v-if="$prismic.asLink(settings.data.cv)"
+            v-if="usePrismic().asLink(settings.data.cv)"
             class="my-4"
           >
             <a
-              :href="$prismic.asLink(settings.data.cv)"
+              :href="usePrismic().asLink(settings.data.cv)"
               rel="noreferrer noopener"
               target="_blank"
               class=""
@@ -197,11 +186,11 @@ export default {
           </li>
           <li class="my-4">
             <a
-              :href="`mailto:${$prismic.asText(settings.email)}`"
+              :href="`mailto:${usePrismic().asText(settings.email)}`"
               class="relative"
             >
               Contact
-              <ExternalLinkIcon class="h-5 w-5 absolute top-0 right-0 -mr-6" />
+              <ArrowTopRightOnSquareIcon class="absolute right-0 top-0 -mr-6 h-5 w-5" />
             </a>
           </li>
         </ul>

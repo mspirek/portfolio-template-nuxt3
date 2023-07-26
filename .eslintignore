@@ -1,0 +1,6 @@
+**/*.json
+**/*.lock
+.gitignore
+.nuxt
+dist
+public

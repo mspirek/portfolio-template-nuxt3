@@ -1,55 +1,27 @@
 <script setup>
-import { usePrismic } from '@prismicio/vue';
-const prismic = usePrismic();
+const { client } = usePrismic();
 
-const { data: settings } = await useAsyncData('prismic', () => prismic.client.getSingle('settings'), { server: false});
-</script>
+const { data: settings } = await useAsyncData('settings', () => client.getSingle('settings'));
 
-<script>
-export default {
-  data: () =>({
-    darkMode: true,
-  }),
-  methods: {
-    toggleDarkMode() {
-      this.darkMode = !this.darkMode;
-
-      if (this.darkMode) {
-        localStorage.setItem('theme', 'dark')
-      } else {
-        localStorage.setItem('theme', 'light')
-      }
-    }
-  },
-  mounted() {
-    if (process.client) {
-      if (localStorage.getItem('theme') && localStorage.getItem('theme') === 'light') {
-        this.darkMode = false;
-      }
-      if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-        this.darkMode = false;
-      }
-    }
-  }
-}
+// useHead({
+//   title: usePrismic().asText(page?.data.meta_title),
+//   meta: [
+//     { name: 'description', content: page?.usePrismic().asText(page.data.meta_description) },
+//     { property: 'og:image', content: settings?.data.default_meta_image.url },
+//   ],
+//   link: [
+//     { rel: 'shortcut icon', href: settings?.data.favicon.url },
+//   ],
+// });
 </script>
 
 <template>
-  <div :class="{'dark': darkMode}">
-    <Head v-if="settings">
-      <Meta property="og:image" :content="settings.data.default_meta_image.url" />
-      <Link rel="shortcut icon" :href="settings.data.favicon.url" />
-    </Head>
-    <div class="dark:bg-stone-900 dark:text-stone-100 text-stone-900 bg-stone-100 min-h-screen flex flex-col font-dm-sans">
-      <PageLoader v-if="!settings" />
-      <template v-else>
-        <PageHeader :settings="settings" @dark-mode="toggleDarkMode" :dark-mode="darkMode"/>
-        <main class="flex-grow container max-w-7xl mx-auto pb-8 px-6">
-          <slot />
-        </main>
-        <PageFooter :settings="settings"/>
-      </template>
-    </div>
+  <div class="flex min-h-screen flex-col bg-stone-100 font-dm-sans text-stone-900 dark:bg-stone-900 dark:text-stone-100">
+    <PageHeader :settings="settings" />
+    <main class="container mx-auto max-w-7xl grow px-6 pb-8">
+      <slot />
+    </main>
+    <PageFooter :settings="settings" />
   </div>
 </template>
 
