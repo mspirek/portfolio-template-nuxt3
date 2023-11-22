@@ -17,9 +17,9 @@ const props = defineProps({
     <nav class="">
       <ul class="flex flex-wrap">
         <li class="py-2">
-          <router-link to="/">
+          <NuxtLink to="/">
             Home
-          </router-link>
+          </NuxtLink>
         </li>
         <li
           class="mx-2 py-2 text-stone-600"
@@ -28,9 +28,9 @@ const props = defineProps({
           /
         </li>
         <li class="py-2">
-          <router-link to="/work">
+          <NuxtLink to="/work">
             Work
-          </router-link>
+          </NuxtLink>
         </li>
         <li
           class="mx-2 py-2 text-stone-600"
@@ -39,9 +39,9 @@ const props = defineProps({
           /
         </li>
         <li class="py-2">
-          <router-link to="/about">
+          <NuxtLink to="/about">
             About
-          </router-link>
+          </NuxtLink>
         </li>
         <li
           class="mx-2 py-2 text-stone-600"

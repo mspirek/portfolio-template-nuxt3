@@ -1,9 +1,11 @@
-import HeroSlice from '@/slices/HeroSlice';
-import TextSlice from '@/slices/TextSlice';
-import ImageSlice from '@/slices/ImageSlice';
-import EmbedSlice from '@/slices/EmbedSlice';
-import CtaSlice from '@/slices/CtaSlice';
-import GallerySlice from '@/slices/GallerySlice';
+import HeroSlice from '@/slices/HeroSlice.vue';
+import TextSlice from '@/slices/TextSlice.vue';
+import ImageSlice from '@/slices/ImageSlice.vue';
+import EmbedSlice from '@/slices/EmbedSlice.vue';
+import CtaSlice from '@/slices/CtaSlice.vue';
+import GallerySlice from '@/slices/GallerySlice.vue';
+import BrandsSlice from '@/slices/BrandsSlice.vue';
+import WorkSlice from '@/slices/WorkSlice.vue';
 
 
 export const useSlices = () => {
@@ -15,6 +17,8 @@ export const useSlices = () => {
     embed_slice: EmbedSlice,
     cta_slice: CtaSlice,
     gallery_slice: GallerySlice,
+    brands_slice: BrandsSlice,
+    work_slice: WorkSlice,
   };
 
   return {

@@ -26,7 +26,7 @@ const { data: settings } = await useAsyncData('settings', () => client.getSingle
 </template>
 
 
-<style lang="postcss">
+<style lang="scss">
 header .desktop-nav a {
   @apply border-b border-stone-600 hover:border-transparent transition-all hover:text-blue-600 pb-1 leading-none;
 }

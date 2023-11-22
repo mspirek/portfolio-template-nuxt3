@@ -43,7 +43,7 @@ const toggleMenu = () => {
     class="container mx-auto flex max-w-7xl items-center justify-between px-6 pb-16 pt-8"
   >
     <div>
-      <router-link to="/">
+      <NuxtLink to="/">
         <PrismicImage
           :field="settings.data.logo_dark"
           class="block h-24 w-24 dark:hidden"
@@ -54,56 +54,50 @@ const toggleMenu = () => {
           class="hidden h-24 w-24 dark:block"
           :class="roundedClasses"
         />
-      </router-link>
+      </NuxtLink>
     </div>
     <nav class="desktop-nav hidden md:block">
-      <ul class="flex items-center font-semibold">
-        <li class="mx-4">
-          <router-link to="/work">
+      <ul class="flex items-center gap-8 font-semibold">
+        <li>
+          <NuxtLink to="/work">
             Work
-          </router-link>
+          </NuxtLink>
         </li>
-        <li class="mx-4">
-          <router-link to="/about">
+        <li>
+          <NuxtLink to="/about">
             About
-          </router-link>
+          </NuxtLink>
         </li>
-        <li
-          v-if="usePrismic().asLink(settings.data.cv)"
-          class="mx-4"
-        >
+        <li v-if="usePrismic().asLink(settings.data.cv)">
           <a
             :href="usePrismic().asLink(settings.data.cv)"
             rel="noreferrer noopener"
             target="_blank"
+            class="relative"
           >
             CV
           </a>
         </li>
-        <li
-          v-if="usePrismic().asText(settings.data.email)"
-          class="mx-4"
-        >
-          <a
+        <li>
+          <NuxtLink
             class="relative"
-            :href="`mailto:${usePrismic().asText(settings.data.email)}`"
+            to="/contact"
           >
             Contact
-            <ArrowTopRightOnSquareIcon class="absolute right-0 top-0 -mr-6 h-5 w-5" />
-          </a>
+          </NuxtLink>
         </li>
         <li>
           <button
-            class="pl-6 transition-all hover:text-blue-600"
+            class="transition-all hover:text-blue-600"
             aria-label="toggle color scheme"
             @click="toggleDark()"
           >
             <MoonIcon
-              v-if="!isDark"
+              v-show="!isDark"
               class="h-6 w-6"
             />
             <SunIcon
-              v-else
+              v-show="isDark"
               class="h-6 w-6"
             />
           </button>
@@ -134,13 +128,13 @@ const toggleMenu = () => {
       class="fixed left-0 top-0 z-10 h-full w-full bg-blue-800 bg-opacity-90 md:hidden"
     >
       <div class="flex items-center justify-between px-6 py-8">
-        <router-link to="/">
+        <NuxtLink to="/">
           <PrismicImage
             :field="settings.data.logo_light"
             :class="roundedClasses"
             class="h-24 w-24"
           />
-        </router-link>
+        </NuxtLink>
         <button @click="toggleMenu">
           <XMarkIcon class="h-8 w-8" />
         </button>
@@ -148,28 +142,28 @@ const toggleMenu = () => {
       <nav class="mobile-nav">
         <ul class="flex flex-col text-center text-xl font-semibold">
           <li class="my-4">
-            <router-link
+            <NuxtLink
               to="/"
               class=""
             >
               Home
-            </router-link>
+            </NuxtLink>
           </li>
           <li class="my-4">
-            <router-link
+            <NuxtLink
               to="/work"
               class=""
             >
               Work
-            </router-link>
+            </NuxtLink>
           </li>
           <li class="my-4">
-            <router-link
+            <NuxtLink
               to="/about"
               class=""
             >
               About
-            </router-link>
+            </NuxtLink>
           </li>
           <li
             v-if="usePrismic().asLink(settings.data.cv)"
@@ -179,19 +173,18 @@ const toggleMenu = () => {
               :href="usePrismic().asLink(settings.data.cv)"
               rel="noreferrer noopener"
               target="_blank"
-              class=""
+              class="relative"
             >
               CV
             </a>
           </li>
           <li class="my-4">
-            <a
-              :href="`mailto:${usePrismic().asText(settings.email)}`"
+            <NuxtLink
+              to="/contact"
               class="relative"
             >
               Contact
-              <ArrowTopRightOnSquareIcon class="absolute right-0 top-0 -mr-6 h-5 w-5" />
-            </a>
+            </NuxtLink>
           </li>
         </ul>
       </nav>

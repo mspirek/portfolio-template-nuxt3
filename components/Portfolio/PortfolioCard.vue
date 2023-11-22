@@ -15,7 +15,7 @@ const formattedDate = computed(() => {
 </script>
 
 <template>
-  <router-link
+  <NuxtLink
     :to="`/work/${props.card.uid}`"
     class="block overflow-hidden rounded-md bg-stone-200 transition-transform ease-in-out hover:-translate-y-2 dark:bg-stone-800"
   >
@@ -57,7 +57,7 @@ const formattedDate = computed(() => {
         </template>
       </ul>
     </div>
-  </router-link>
+  </NuxtLink>
 </template>
 
 <style>

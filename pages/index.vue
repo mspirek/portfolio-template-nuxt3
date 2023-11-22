@@ -2,20 +2,16 @@
 const { client } = usePrismic();
 const { slices } = useSlices();
 
-const [{ data: page }, { data: items }] = await Promise.all([
-  useAsyncData('home', () => client.getByUID('page', 'home')),
-  useAsyncData('featured-work', () => client.getAllByType('portfolio_item', {
-    orderings: {
-      field: 'my.portfolio_item.date',
-      direction: 'desc',
-    },
-  },
-  )),
-]);
+const fetchLinks = [
+  'portfolio_item.title',
+  'portfolio_item.excerpt',
+  'portfolio_item.categories',
+  'portfolio_item.date',
+  'portfolio_item.cover_image',
+];
 
-const featuredWork = computed(() => {
-  return items?.value?.filter(item => item.data.featured);
-});
+const { data: page } = await useAsyncData('home', () => client.getByUID('page', 'home', { fetchLinks }));
+
 </script>
 
 <template>
@@ -24,16 +20,6 @@ const featuredWork = computed(() => {
       <SliceZone
         :slices="page.data.body"
         :components="slices"
-      />
-    </div>
-    <div
-      v-if="featuredWork"
-      class="grid gap-8 md:grid-cols-2"
-    >
-      <portfolio-card
-        v-for="(card, idx) in featuredWork"
-        :key="idx"
-        :card="card"
       />
     </div>
   </div>
