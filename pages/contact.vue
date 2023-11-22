@@ -54,10 +54,24 @@ const submit = async () => {
     <form
       v-if="!success"
       name="contact"
-      netlify
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
       class="flex max-w-md flex-col gap-4"
       @submit.prevent="submit"
     >
+      <input
+        type="hidden"
+        name="form-name"
+        value="contact"
+      >
+      <div v-show="false">
+        <label>
+          Don't fill this out: <input
+            name="bot-field"
+            type="text"
+          >
+        </label>
+      </div>
       <div>
         <label
           class="block pb-2"
