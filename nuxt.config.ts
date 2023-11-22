@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   ],
 
   prismic: {
-    endpoint: 'mspirek',
+    endpoint: process.env.PRISMIC_REPO,
     clientConfig: {
       routes: [
         {
@@ -34,6 +34,13 @@ export default defineNuxtConfig({
   //   enableRouterSync: true, // Pass the router instance of your app to automatically sync with router (optional)
   //   devtools: true, // (optional)
   // },
+
+  runtimeConfig: {
+    public: {
+      PRISMIC: process.env.PRISMIC_REPO,
+      BASIN: process.env.BASIN,
+    },
+  },
 
   css: [
     '@fontsource/dm-sans/400.css',

@@ -11,7 +11,7 @@ defineProps(getSliceComponentProps(['slice', 'index', 'slices', 'context']));
     <PrismicRichText
       v-if="usePrismic().asText(slice.primary.subheader)"
       :field="slice.primary.subheader"
-      class="light-texttext-2xl"
+      class="light-text text-2xl"
     />
     <PrismicRichText
       v-if="usePrismic().asText(slice.primary.body_text)"
