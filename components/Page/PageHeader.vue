@@ -79,12 +79,14 @@ const toggleMenu = () => {
           </a>
         </li>
         <li>
-          <NuxtLink
-            class="relative"
-            to="/contact"
+          <a
+            href="mailto:mark@markspirek.com"
+            target="_blank"
+            class="relative inline-flex items-center"
           >
             Contact
-          </NuxtLink>
+            <ArrowTopRightOnSquareIcon class="ml-2 h-6 w-6" />
+          </a>
         </li>
         <li>
           <button
@@ -179,12 +181,14 @@ const toggleMenu = () => {
             </a>
           </li>
           <li class="my-4">
-            <NuxtLink
-              to="/contact"
-              class="relative"
+            <a
+              href="mailto:mark@markspirek.com"
+              target="_blank"
+              class="relative inline-flex items-center"
             >
               Contact
-            </NuxtLink>
+              <ArrowTopRightOnSquareIcon class="ml-2 h-6 w-6" />
+            </a>
           </li>
         </ul>
       </nav>
