@@ -54,6 +54,7 @@ const submit = async () => {
     <form
       v-if="!success"
       name="contact"
+      netlify
       class="flex max-w-md flex-col gap-4"
       @submit.prevent="submit"
     >
