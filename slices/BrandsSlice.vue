@@ -3,7 +3,7 @@ defineProps(getSliceComponentProps(['slice', 'index', 'slices', 'context']));
 </script>
 
 <template>
-  <div class="grid grid-cols-3 items-center gap-16 pb-16  md:grid-cols-5">
+  <div class="grid grid-cols-2 items-center gap-16 pb-16  md:grid-cols-5">
     <div
       v-for="(img, idx) in slice.items"
       :key="idx"
